@@ -77,8 +77,8 @@ void drawScene(void)
     glRotatef(45, 0, 0, 1);
     glScalef(0.5, 0.5, 1.0);
     object(0, 1.0, 0);
-    // translate to (0,10,0)
-    glTranslatef(0.0, 10.0, 0.0);
+    // translate to (0,20,0)
+    glTranslatef(0.0, 20.0, 0.0);
     // rotate 45 degree around the z-axis
     glRotatef(45, 0, 0, 1);
     // draw the object
