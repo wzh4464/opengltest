@@ -10,6 +10,45 @@
 #include <stdio.h>
 #include "gsrc.h"
 
+void Part(float radius, float height)
+{
+    glPushMatrix();
+    glColor3f(1.0, 0.0, 0.0);
+    glRotatef(-90.0, 1.0, 0.0, 0.0);
+    // Rotate about × axis by-90 deg.
+    gluCylinder(gluNewQuadric(), radius, radius, height, 10, 10);
+    // pobj1, radius, radius, height, 10, 10);
+    gluDisk(gluNewQuadric(), 0, height, 10, 10); // draw a solid disk to cover the base
+    glPushMatrix();
+    glTranslatef(0, 0, height);
+    gluDisk(gluNewQuadric(), 0, height, 10, 10); // draw a solid disk to cover the top gIPopMatrix);
+    glPopMatrix();
+}
+
+void hierarchical_object1()
+{
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glTranslatef(2, 0, 0);
+    Part(4, 20);
+    // part1 translates //draw part1
+    glScalef(0.5, 0.5, 1);
+    glTranslatef(-4, 20, 0);
+    glRotatef(0, 0, 45, 1);
+    // M12
+    Part(2, 10);
+    // draw part2
+    glPushMatrix();
+    glTranslatef(0, 10, 0);
+    glRotatef(0, 0, 45, 1);
+    // M23
+    glRotatef(0, 45, 0, 1);
+    // part3 rotates
+    Part(2, 10);
+    // draw part3
+    glPopMatrix();
+}
+
 // Drawing routine.
 
 void object(float r, float g, float b)
@@ -143,12 +182,12 @@ int main(int argc, char **argv)
     glClear(GL_COLOR_BUFFER_BIT);
 
     // set the callback functions
-    
+
     // glutReshapeFunc(resize);
     glutKeyboardFunc(keyInput);
     glutMouseFunc(gsrc_mousebutton);
     glutMotionFunc(gsrc_mousemove);
-    glutDisplayFunc(drawScene);
+    glutDisplayFunc(hierarchical_object1);
     // initialize the GLEW library
     glewExperimental = GL_TRUE;
     glewInit();
