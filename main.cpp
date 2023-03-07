@@ -10,6 +10,28 @@
 #include <stdio.h>
 #include "gsrc.h"
 
+void Part(){
+    glColor3f(0,1,0);
+    glPushMatrix();
+    glRotatef(-90,1,0,0);
+    gluCylinder(gluNewQuadric(), 4, 4, 20, 32, 5);
+    gluDisk(gluNewQuadric(), 0, 4, -32, 5);
+    glTranslatef(0,0,20);
+    gluDisk(gluNewQuadric(), 0, 4, -32, 5);
+    glPopMatrix();
+    glFlush();
+}
+
+void dumeng(){
+    Part();
+    glTranslatef(-4, 20, 0);
+    glRotatef(45, 0, 0, 1);
+    glScalef(0.5, 0.5, 1.0);
+    Part();
+    glTranslatef(0.0, 10.0, 0.0);
+    glRotatef(45, 0, 0, 1);
+    Part();
+}
 // Drawing routine.
 
 void object(float r, float g, float b)
@@ -111,7 +133,7 @@ int main(int argc, char **argv)
     glClear(GL_COLOR_BUFFER_BIT);
 
     // set the callback functions
-    glutDisplayFunc(drawScene);
+    glutDisplayFunc(dumeng);
     glutReshapeFunc(resize);
     glutKeyboardFunc(keyInput);
     glutMouseFunc(gsrc_mousebutton);
