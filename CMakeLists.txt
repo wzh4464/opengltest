@@ -5,6 +5,12 @@ add_definitions(-DGL_SILENCE_DEPRECATION)
 include_directories(/usr/local/include)
 include_directories(/opt/homebrew/include)
 
+# debug mode
+set(CMAKE_BUILD_TYPE Debug)
+add_compile_options(-Wall -Wextra -Wpedantic -g)
+# no optimization
+set(CMAKE_CXX_FLAGS_DEBUG "-O0")
+
 link_directories(/opt/homebrew/lib)
 file(GLOB SOURCES
     main.cpp

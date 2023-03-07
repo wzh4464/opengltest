@@ -29,5 +29,9 @@
     "**/.*/**",
     "**/.vscode",
     "**/.vscode/**"
-  ]
+  ],
+  "files.associations": {
+    "*.m": "matlab",
+    "memory": "cpp"
+  }
 }

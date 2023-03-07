@@ -13,6 +13,7 @@
 // Drawing routine.
 
 void object(float r, float g, float b)
+// draw a rectangle with color (r,g,b)
 {
 
     // set the color
@@ -36,9 +37,40 @@ void object(float r, float g, float b)
     glFlush();
 }
 
+void setAndRotate()
+// set the modelview matrix and rotate it
+{
+    // clear the screen
+    glClear(GL_COLOR_BUFFER_BIT);
+    // set the color
+    // glColor3f(0.0, 0.0, 0.0);
+
+    // float m[16];
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0, 10, 50, 0, 10, 0, 0, 1, 0);
+
+    glMultMatrixf(gsrc_getmo()); // get the rotation matrix from the rotation user-interface
+
+    // show the modelview matrix in std output
+    // glGetFloatv(GL_MODELVIEW_MATRIX, m);
+    // printf("modelview matrix: *** \n");
+    // printf("modelview matrix: %f %f %f %f \n", m[0], m[1], m[2], m[3]);
+    // printf("modelview matrix: %f %f %f %f \n", m[4], m[5], m[6], m[7]);
+    // printf("modelview matrix: %f %f %f %f \n", m[8], m[9], m[10], m[11]);
+    // printf("modelview matrix: %f %f %f %f \n", m[12], m[13], m[14], m[15]);
+}
+
 // Drawing routine.
 void drawScene(void)
+// draw the scene
 {
+    setAndRotate();
+
+    // save the current matrix
+    glPushMatrix();
+
     // draw the object
     object(1.0, 0, 0);
     glTranslatef(-4, 20, 0);
@@ -51,30 +83,30 @@ void drawScene(void)
     glRotatef(45, 0, 0, 1);
     // draw the object
     object(0, 0, 1.0);
+
+    // restore the current matrix
+    glPopMatrix();
 }
 
 // Initialization routine.
 void setup(void)
+// set up the scene
 {
     glClearColor(1.0, 1.0, 1.0, 0.0);
-}
-
-// OpenGL window reshape routine.
-void resize(int w, int h)
-{
-    glViewport(0, 0, w, h);
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport); // viewport is by default the display window
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-50, 50, -50, 50, -1.0, 1.0);
+    gluPerspective(45, (float)viewport[2] / (float)viewport[3], 1, 100);
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    // show the size of the drawing area at right bottom corner
-    char str[100];
-    sprintf(str, "Window size: %d x %d", w, h);
-    glutSetWindowTitle(str);
+    // show the projection matrix in std output
+    // float m[16];
+    // glGetFloatv(GL_PROJECTION_MATRIX, m);
+    // printf("projection matrix: %f %f %f %f \n", m[0], m[1], m[2], m[3]);
+    // printf("projection matrix: %f %f %f %f \n", m[4], m[5], m[6], m[7]);
+    // printf("projection matrix: %f %f %f %f \n", m[8], m[9], m[10], m[11]);
+    // printf("projection matrix: %f %f %f %f \n", m[12], m[13], m[14], m[15]);
 }
 
 // Keyboard input processing routine.
@@ -111,12 +143,12 @@ int main(int argc, char **argv)
     glClear(GL_COLOR_BUFFER_BIT);
 
     // set the callback functions
-    glutDisplayFunc(drawScene);
-    glutReshapeFunc(resize);
+    
+    // glutReshapeFunc(resize);
     glutKeyboardFunc(keyInput);
     glutMouseFunc(gsrc_mousebutton);
     glutMotionFunc(gsrc_mousemove);
-
+    glutDisplayFunc(drawScene);
     // initialize the GLEW library
     glewExperimental = GL_TRUE;
     glewInit();

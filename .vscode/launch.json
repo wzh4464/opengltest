@@ -8,13 +8,9 @@
       "args": [
         ""
       ],
-      "stopAtEntry": true,
-      "cwd": "/Users/zihanwu/opengl_test",
-      "environment": [],
-      "program": "/Users/zihanwu/opengl_test/build/Debug/outDebug",
+      "cwd": "/Users/zihanwu/codes/opengl_test",
+      "program": "/Users/zihanwu/codes/opengl_test/build/opengl_test",
       "internalConsoleOptions": "openOnSessionStart",
-      "MIMode": "gdb",
-      "externalConsole": false
     }
   ]
 }
