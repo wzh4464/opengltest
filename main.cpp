@@ -72,17 +72,17 @@ void drawScene(void)
     glPushMatrix();
 
     // draw the object
-    object(1.0, 0, 0);
+    
+    glTranslatef(2.0, 0.0, 0.0);
+    object(1.0, 0.0, 0.0);
+    glRotatef(45, 0, 0, 1);
+    object(0.0, 0.0, 1.0);
     glTranslatef(-4, 20, 0);
+    
     glRotatef(45, 0, 0, 1);
-    glScalef(0.5, 0.5, 1.0);
-    object(0, 1.0, 0);
-    // translate to (0,20,0)
-    glTranslatef(0.0, 20.0, 0.0);
-    // rotate 45 degree around the z-axis
-    glRotatef(45, 0, 0, 1);
-    // draw the object
-    object(0, 0, 1.0);
+    
+    glScalef(0.5, 0.5, 1);
+    object(0.0, 1.0, 0.0);
 
     // restore the current matrix
     glPopMatrix();
