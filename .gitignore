@@ -1,0 +1,16 @@
+# ignore build files
+build/
+dist/
+*.egg-info
+
+# ignore GTAGS files
+GTAGS
+GPATH
+GRTAGS
+
+# ignore binary files
+*.out
+*.o
+
+# ignore sh scripts
+*.sh
