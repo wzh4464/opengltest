@@ -11,6 +11,7 @@
 #include "gsrc.h"
 
 // camera offset
+// it is controlled by the 8546 numeric keypad
 int xoffset = 0;
 int yoffset = 0;
 
@@ -132,7 +133,7 @@ void gsrc_move(int x, int y)
 }
 
 // Keyboard input processing routine.
-void keyInput(unsigned char key, int x, int y)
+void keyInput(unsigned char key, int, int)
 {
 
     // show key code in error output

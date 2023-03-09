@@ -23,7 +23,7 @@ void normalize( float *a );
 
 float* gsrc_getmo(){ return mo; }
 
-void gsrc_mousebutton(int button, int state, int x, int y )
+void gsrc_mousebutton(int, int , int x, int y )
 {
   vassign( v0, 2.0*x/glutGet(GLUT_WINDOW_WIDTH)-1, -2.0*y/glutGet(GLUT_WINDOW_HEIGHT)+1, 1 );
   normalize(v0);
