@@ -10,6 +10,10 @@
 #include <stdio.h>
 #include "gsrc.h"
 
+// camera offset
+int xoffset = 0;
+int yoffset = 0;
+
 // Drawing routine.
 
 void object(float r, float g, float b)
@@ -49,7 +53,8 @@ void setAndRotate()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0, 10, 50, 0, 10, 0, 0, 1, 0);
+    // gluLookAt(-10, 10, 50, -10, 10, 0, 0, 1, 0);
+    gluLookAt(-10 + xoffset, 10 + yoffset, 50, -10 + xoffset, 10 + yoffset, 0, 0, 1, 0);
 
     glMultMatrixf(gsrc_getmo()); // get the rotation matrix from the rotation user-interface
 
@@ -104,7 +109,7 @@ void setup(void)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45, (float)viewport[2] / (float)viewport[3], 1, 100);
+    gluPerspective(45, (float)viewport[2] / (float)viewport[3], 0.1, 100);
 
     // show the projection matrix in std output
     // float m[16];
@@ -115,14 +120,49 @@ void setup(void)
     // printf("projection matrix: %f %f %f %f \n", m[12], m[13], m[14], m[15]);
 }
 
+void gsrc_move(int x, int y)
+// move the camera
+{
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    xoffset += x;
+    yoffset += y;
+    // gluLookAt(-10 + xoffset, 10 + yoffset, 50, -10 + xoffset, 10 + yoffset, 0, 0, 1, 0);
+    glutPostRedisplay();
+}
+
 // Keyboard input processing routine.
 void keyInput(unsigned char key, int x, int y)
 {
+
+    // show key code in error output
+    // fprintf(stderr, "key code: %d \n", key);
+
     switch (key)
     {
+    // esc key
     case 27:
         exit(0);
         break;
+
+    // arrow keys
+    // up
+    case 56:
+        gsrc_move(0, 1);
+        break;
+    // down
+    case 51:
+        gsrc_move(0, -1);
+        break;
+    // left
+    case 50:
+        gsrc_move(-1, 0);
+        break;
+    // right
+    case 54:
+        gsrc_move(1, 0);
+        break;
+
     default:
         break;
     }
@@ -164,8 +204,8 @@ int main(int argc, char **argv)
 
     // glutIdleFunc(drawScene);
     // draw the scene
-    // glutPostRedisplay();
-    drawScene();
+    glutPostRedisplay();
+    // drawScene();
 
     // enter the main loop
     glutMainLoop();
