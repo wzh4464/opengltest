@@ -10,11 +10,6 @@
 #include <stdio.h>
 #include "gsrc.h"
 
-// camera offset
-// it is controlled by the 8546 numeric keypad
-int xoffset = 0;
-int yoffset = 0;
-
 // Drawing routine.
 
 void object(float r, float g, float b)
@@ -40,32 +35,6 @@ void object(float r, float g, float b)
     glPopMatrix();
     // flush the buffer
     glFlush();
-}
-
-void setAndRotate()
-// set the modelview matrix and rotate it
-{
-    // clear the screen
-    glClear(GL_COLOR_BUFFER_BIT);
-    // set the color
-    // glColor3f(0.0, 0.0, 0.0);
-
-    // float m[16];
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    // gluLookAt(-10, 10, 50, -10, 10, 0, 0, 1, 0);
-    gluLookAt(-10 + xoffset, 10 + yoffset, 50, -10 + xoffset, 10 + yoffset, 0, 0, 1, 0);
-
-    glMultMatrixf(gsrc_getmo()); // get the rotation matrix from the rotation user-interface
-
-    // show the modelview matrix in std output
-    // glGetFloatv(GL_MODELVIEW_MATRIX, m);
-    // printf("modelview matrix: *** \n");
-    // printf("modelview matrix: %f %f %f %f \n", m[0], m[1], m[2], m[3]);
-    // printf("modelview matrix: %f %f %f %f \n", m[4], m[5], m[6], m[7]);
-    // printf("modelview matrix: %f %f %f %f \n", m[8], m[9], m[10], m[11]);
-    // printf("modelview matrix: %f %f %f %f \n", m[12], m[13], m[14], m[15]);
 }
 
 // Drawing routine.
@@ -98,77 +67,6 @@ void drawScene(void)
     glutSwapBuffers();
 }
 
-// Initialization routine.
-void setup(void)
-// set up the scene
-{
-    glClearColor(1.0, 1.0, 1.0, 0.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    GLint viewport[4];
-    glGetIntegerv(GL_VIEWPORT, viewport); // viewport is by default the display window
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45, (float)viewport[2] / (float)viewport[3], 0.1, 100);
-
-    // show the projection matrix in std output
-    // float m[16];
-    // glGetFloatv(GL_PROJECTION_MATRIX, m);
-    // printf("projection matrix: %f %f %f %f \n", m[0], m[1], m[2], m[3]);
-    // printf("projection matrix: %f %f %f %f \n", m[4], m[5], m[6], m[7]);
-    // printf("projection matrix: %f %f %f %f \n", m[8], m[9], m[10], m[11]);
-    // printf("projection matrix: %f %f %f %f \n", m[12], m[13], m[14], m[15]);
-}
-
-void gsrc_move(int x, int y)
-// move the camera
-{
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    xoffset += x;
-    yoffset += y;
-    // gluLookAt(-10 + xoffset, 10 + yoffset, 50, -10 + xoffset, 10 + yoffset, 0, 0, 1, 0);
-    glutPostRedisplay();
-}
-
-// Keyboard input processing routine.
-void keyInput(unsigned char key, int, int)
-{
-
-    // show key code in error output
-    // fprintf(stderr, "key code: %d \n", key);
-
-    switch (key)
-    {
-    // esc key
-    case 27:
-        exit(0);
-        break;
-
-    // arrow keys
-    // up
-    case 56:
-        gsrc_move(0, 1);
-        break;
-    // down
-    case 51:
-        gsrc_move(0, -1);
-        break;
-    // left
-    case 50:
-        gsrc_move(-1, 0);
-        break;
-    // right
-    case 54:
-        gsrc_move(1, 0);
-        break;
-
-    default:
-        break;
-    }
-}
-
 // Main routine.
 int main(int argc, char **argv)
 {
@@ -192,7 +90,7 @@ int main(int argc, char **argv)
     // set the callback functions
     
     // glutReshapeFunc(resize);
-    glutKeyboardFunc(keyInput);
+    glutKeyboardFunc(gsrc_keyInput);
     glutMouseFunc(gsrc_mousebutton);
     glutMotionFunc(gsrc_mousemove);
     glutDisplayFunc(drawScene);

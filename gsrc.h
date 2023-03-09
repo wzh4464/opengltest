@@ -4,6 +4,8 @@
 float* gsrc_getmo();
 void gsrc_mousebutton(int button, int state, int x, int y );
 void gsrc_mousemove(int x, int y);
-
+void gsrc_keyInput(unsigned char key, int, int);
+void setAndRotate();
+void setup(void);
 
 #endif
