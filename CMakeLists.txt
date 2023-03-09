@@ -5,6 +5,9 @@ add_definitions(-DGL_SILENCE_DEPRECATION)
 include_directories(/usr/local/include)
 include_directories(/opt/homebrew/include)
 
+# compile commands
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # debug mode
 set(CMAKE_BUILD_TYPE Debug)
 add_compile_options(-Wall -Wextra -Wpedantic -g)
