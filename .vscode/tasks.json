@@ -11,6 +11,16 @@
 			"group": "build",
 			"problemMatcher": [],
 			"detail": "CMake template build task"
+		},
+		{
+			// run the executable
+			"type": "shell",
+			"label": "CMake: run",
+			"command": "build/opengl_test",
+			"args": [],
+			"group": "build",
+			"problemMatcher": [],
+			"detail": "CMake template run task"
 		}
 	]
 }
