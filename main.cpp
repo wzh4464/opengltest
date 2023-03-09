@@ -43,7 +43,7 @@ void setAndRotate()
     // clear the screen
     glClear(GL_COLOR_BUFFER_BIT);
     // set the color
-    // glColor3f(0.0, 0.0, 0.0);
+    // glColor3f(1.0, 1.0, 1.0);
 
     // float m[16];
 
@@ -62,6 +62,19 @@ void setAndRotate()
     // printf("modelview matrix: %f %f %f %f \n", m[12], m[13], m[14], m[15]);
 }
 
+void Part(float r, float h)
+{
+    // Draw a cylinder with radius r and height h
+    GLUquadricObj *quad = gluNewQuadric();
+    glPushMatrix();
+    glRotatef(-90, 1, 0, 0);
+    gluCylinder(quad, r, r, h, 32, 1);
+    gluDeleteQuadric(quad);
+    glFlush();
+    glPopMatrix();
+    glFlush();
+}
+
 // Drawing routine.
 void drawScene(void)
 // draw the scene
@@ -72,20 +85,29 @@ void drawScene(void)
     glPushMatrix();
 
     // draw the object
-    object(1.0, 0, 0);
-    glTranslatef(-4, 20, 0);
-    glRotatef(45, 0, 0, 1);
-    glScalef(0.5, 0.5, 1.0);
-    object(0, 1.0, 0);
-    // translate to (0,20,0)
-    glTranslatef(0.0, 20.0, 0.0);
-    // rotate 45 degree around the z-axis
-    glRotatef(45, 0, 0, 1);
-    // draw the object
-    object(0, 0, 1.0);
+    // glClear(GL_COLOR_BUFFER_BIT);
 
-    // restore the current matrix
+    Part(4, 20); // Part 1
+    glScalef(0.5, 0.5, 1);
+    glRotatef(45, 0, 0, 1);
+    glTranslatef(-4, 20, 0);
+    Part(4, 20); // Part 2
+    glRotatef(45, 0, 0, 1);
+    glTranslatef(0, 20, 0);
+    Part(4, 20); // Part 3
+    glColor3f(1, 0, 0);
+    glFlush();
+
     glPopMatrix();
+    glColor3f(1, 0, 0);
+    glutSwapBuffers();
+    // draw a coordinate system
+    // glPushMatrix();
+    // glTranslatef(0, 0, 0);
+    // glScalef(0.5, 0.5, 0.5);
+    // gsrc_drawaxes();
+    // glPopMatrix();
+    // glFlush();
 }
 
 // Initialization routine.
@@ -93,20 +115,13 @@ void setup(void)
 // set up the scene
 {
     glClearColor(1.0, 1.0, 1.0, 0.0);
+    glClear(GL_COLOR_BUFFER_BIT);
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport); // viewport is by default the display window
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45, (float)viewport[2] / (float)viewport[3], 1, 100);
-
-    // show the projection matrix in std output
-    // float m[16];
-    // glGetFloatv(GL_PROJECTION_MATRIX, m);
-    // printf("projection matrix: %f %f %f %f \n", m[0], m[1], m[2], m[3]);
-    // printf("projection matrix: %f %f %f %f \n", m[4], m[5], m[6], m[7]);
-    // printf("projection matrix: %f %f %f %f \n", m[8], m[9], m[10], m[11]);
-    // printf("projection matrix: %f %f %f %f \n", m[12], m[13], m[14], m[15]);
 }
 
 // Keyboard input processing routine.
@@ -127,12 +142,13 @@ int main(int argc, char **argv)
 {
     // initialize the GLUT library
     glutInit(&argc, argv);
+    // initialize the GLEW library
 
     // glutInitContextVersion(4, 3);
     // glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);
 
     // initialize the display mode
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 
     // set the window size
     glutInitWindowSize(500, 500);
@@ -140,21 +156,22 @@ int main(int argc, char **argv)
 
     // create the window
     glutCreateWindow("main.cpp");
-    glClear(GL_COLOR_BUFFER_BIT);
+    // set the background color
+    setup();
 
     // set the callback functions
-    
+
     // glutReshapeFunc(resize);
     glutKeyboardFunc(keyInput);
     glutMouseFunc(gsrc_mousebutton);
     glutMotionFunc(gsrc_mousemove);
     glutDisplayFunc(drawScene);
-    // initialize the GLEW library
+
     glewExperimental = GL_TRUE;
     glewInit();
 
-    // set the background color
-    setup();
+    // first frame
+    drawScene();
 
     // enter the main loop
     glutMainLoop();
