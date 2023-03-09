@@ -86,6 +86,10 @@ void drawScene(void)
 
     // restore the current matrix
     glPopMatrix();
+
+    // double buffer
+    glColor3f(1, 0, 0);
+    glutSwapBuffers();
 }
 
 // Initialization routine.
@@ -93,6 +97,8 @@ void setup(void)
 // set up the scene
 {
     glClearColor(1.0, 1.0, 1.0, 0.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport); // viewport is by default the display window
 
@@ -132,7 +138,7 @@ int main(int argc, char **argv)
     // glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);
 
     // initialize the display mode
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 
     // set the window size
     glutInitWindowSize(500, 500);
@@ -140,7 +146,7 @@ int main(int argc, char **argv)
 
     // create the window
     glutCreateWindow("main.cpp");
-    glClear(GL_COLOR_BUFFER_BIT);
+    // glClear(GL_COLOR_BUFFER_BIT);
 
     // set the callback functions
     
@@ -155,6 +161,11 @@ int main(int argc, char **argv)
 
     // set the background color
     setup();
+
+    // glutIdleFunc(drawScene);
+    // draw the scene
+    // glutPostRedisplay();
+    drawScene();
 
     // enter the main loop
     glutMainLoop();
