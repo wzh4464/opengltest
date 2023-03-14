@@ -45,8 +45,9 @@ void object(void)
 //
 {
     glPushMatrix();
-    glTranslatef(3, 0, -10);
+    // glTranslatef(3, 0, -10);
     glRotatef(60, 0, 1, 0);
+    glRotatef(15, 1, 0, 0);
     Part_2();
     glPopMatrix();
 }
@@ -61,9 +62,15 @@ void drawScene(void)
     // glTranslatef(100, 0, 100);
 
     Part_1();
-    object();
-    glScalef(-1, 1, 1);
-    object();
+    glPushMatrix();
+    glTranslatef(3, 0, -10);
+    glRotatef(60, 0, 1, 0);
+    Part_2();
+    glPopMatrix();
+
+    glTranslatef(-3, 0, -10);
+    glRotatef(120, 0, 1, 0);
+    Part_2();
 
     // double buffer
     glColor3f(1, 0, 0);
