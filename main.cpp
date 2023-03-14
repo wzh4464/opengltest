@@ -41,14 +41,36 @@ void Part_2()
 
 // Drawing routine.
 
-void object(void)
-//
+// void object(void)
+// //
+// {
+//     glPushMatrix();
+//     // glTranslatef(3, 0, -10);
+//     glRotatef(60, 0, 1, 0);
+//     glRotatef(15, 1, 0, 0);
+//     Part_2();
+//     glPopMatrix();
+// }
+
+void object()
 {
+    // glMatrixMode(GL_MODELVIEW);
+    // glLoadIdentity();
     glPushMatrix();
-    // glTranslatef(3, 0, -10);
+    Part_1();
+    glPushMatrix();
+    glTranslatef(3, 0, -10);
     glRotatef(60, 0, 1, 0);
-    glRotatef(15, 1, 0, 0);
     Part_2();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-3, 0, -10);
+    glRotatef(30, 0, 1, 0);
+    glPushMatrix();
+    glScalef(-1, 1, 1);
+    Part_2();
+    glPopMatrix();
+    glPopMatrix();
     glPopMatrix();
 }
 
@@ -58,19 +80,7 @@ void drawScene(void)
 {
     setAndRotate();
 
-    // translate 100, 0, 100
-    // glTranslatef(100, 0, 100);
-
-    Part_1();
-    glPushMatrix();
-    glTranslatef(3, 0, -10);
-    glRotatef(60, 0, 1, 0);
-    Part_2();
-    glPopMatrix();
-
-    glTranslatef(-3, 0, -10);
-    glRotatef(120, 0, 1, 0);
-    Part_2();
+    object();
 
     // double buffer
     glColor3f(1, 0, 0);
