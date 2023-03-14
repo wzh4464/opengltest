@@ -20,7 +20,10 @@
 			"args": [],
 			"group": "build",
 			"problemMatcher": [],
-			"detail": "CMake template run task"
+			"detail": "CMake template run task",
+			"dependsOn": [
+				"CMake: build"
+			]
 		}
 	]
 }
