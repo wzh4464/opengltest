@@ -10,31 +10,45 @@
 #include <stdio.h>
 #include "gsrc.h"
 
+void Part_1()
+{
+    // rectangle 6 * 20
+    glPushMatrix();
+    // glRotatef(90, 0, 0, 1);
+    glBegin(GL_POLYGON);
+    glColor3f(1.0, 0.0, 0.0);
+    glVertex3f(-3, 0, -10);
+    glVertex3f(3, 0, -10);
+    glVertex3f(3, 0, 10);
+    glVertex3f(-3, 0, 10);
+    glEnd();
+    glPopMatrix();
+}
+
+void Part_2()
+{
+    // rectangle 6*10
+    glPushMatrix();
+    glBegin(GL_POLYGON);
+    glColor3f(0.0, 1.0, 0.0);
+    glVertex3f(0, 0, 3);
+    glVertex3f(0, 0, -3);
+    glVertex3f(10, 0, -3);
+    glVertex3f(10, 0, 3);
+    glEnd();
+    glPopMatrix();
+}
+
 // Drawing routine.
 
-void object(float r, float g, float b)
-// draw a rectangle with color (r,g,b)
+void object(void)
+//
 {
-
-    // set the color
-    glColor3f(r, g, b);
-    // push the current matrix
     glPushMatrix();
-    // translate to (-4,0,0)
-    glTranslatef(-4.0, 0.0, 0.0);
-
-    // draw a rectangle with size 20*8
-    glBegin(GL_QUADS);
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(8.0, 0.0, 0.0);
-    glVertex3f(8.0, 20.0, 0.0);
-    glVertex3f(0.0, 20.0, 0.0);
-    glEnd();
-
-    // pop the current matrix
+    glTranslatef(3, 0, -10);
+    glRotatef(60, 0, 1, 0);
+    Part_2();
     glPopMatrix();
-    // flush the buffer
-    glFlush();
 }
 
 // Drawing routine.
@@ -43,24 +57,13 @@ void drawScene(void)
 {
     setAndRotate();
 
-    // save the current matrix
-    glPushMatrix();
+    // translate 100, 0, 100
+    // glTranslatef(100, 0, 100);
 
-    // draw the object
-    object(1.0, 0, 0);
-    glTranslatef(-4, 20, 0);
-    glRotatef(45, 0, 0, 1);
-    glScalef(0.5, 0.5, 1.0);
-    object(0, 1.0, 0);
-    // translate to (0,20,0)
-    glTranslatef(0.0, 20.0, 0.0);
-    // rotate 45 degree around the z-axis
-    glRotatef(45, 0, 0, 1);
-    // draw the object
-    object(0, 0, 1.0);
-
-    // restore the current matrix
-    glPopMatrix();
+    Part_1();
+    object();
+    glScalef(-1, 1, 1);
+    object();
 
     // double buffer
     glColor3f(1, 0, 0);
@@ -88,7 +91,7 @@ int main(int argc, char **argv)
     // glClear(GL_COLOR_BUFFER_BIT);
 
     // set the callback functions
-    
+
     // glutReshapeFunc(resize);
     glutKeyboardFunc(gsrc_keyInput);
     glutMouseFunc(gsrc_mousebutton);
