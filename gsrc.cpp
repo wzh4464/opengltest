@@ -135,6 +135,22 @@ void gsrc_keyInput(unsigned char key, int, int)
     glutPostRedisplay();
     break;
 
+  // r reset
+  case 114:
+    xoffset = 0;
+    yoffset = 0;
+    zoom = 1.0;
+    // mo = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
+    for (int i = 0; i < 4; i++)
+    {
+      for (int j = 0; j < 4; j++)
+      {
+        mo[i * 4 + j] = (i == j) ? 1 : 0;
+      }
+    }
+    glutPostRedisplay();
+    break;
+
   default:
     break;
   }
