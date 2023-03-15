@@ -18,6 +18,10 @@ int yoffset = 0;
 float zoom = 1.0;
 
 float v0[3], v1[3];
+// v0 and v1 are used to calculate the rotation angle
+// v0 is the previous mouse position
+// v1 is the current mouse position
+
 float mo[16] = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
 
 float clamp(float x, float a, float b);
@@ -39,7 +43,7 @@ void gsrc_mousebutton(int button, int state, int x, int y)
 
   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
   {
-    vassign(v0, 2.0 * x / glutGet(GLUT_WINDOW_WIDTH) - 1, -2.0 * y / glutGet(GLUT_WINDOW_HEIGHT) + 1, 1);
+    vassign(v0, -2.0 * y / glutGet(GLUT_WINDOW_HEIGHT) + 1, 1, 2.0 * x / glutGet(GLUT_WINDOW_WIDTH) - 1);
     normalize(v0);
   }
   // else if (button == 3)
@@ -58,7 +62,7 @@ void gsrc_mousemove(int x, int y)
 {
   float axis[3], angle;
 
-  vassign(v1, 2.0 * x / glutGet(GLUT_WINDOW_WIDTH) - 1, -2.0 * y / glutGet(GLUT_WINDOW_HEIGHT) + 1, 1);
+  vassign(v1, -2.0 * y / glutGet(GLUT_WINDOW_HEIGHT) + 1, 1, 2.0 * x / glutGet(GLUT_WINDOW_WIDTH) - 1);
   normalize(v1);
   if (vequal(v0, v1))
     return;
