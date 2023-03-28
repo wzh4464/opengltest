@@ -61,6 +61,8 @@ void drawScene(void)
     // translate 100, 0, 100
     // glTranslatef(100, 0, 100);
 
+    glPushMatrix();
+
     Part_1();
     glPushMatrix();
     glTranslatef(3, 0, -10);
@@ -72,8 +74,11 @@ void drawScene(void)
     glRotatef(120, 0, 1, 0);
     Part_2();
 
+    glPopMatrix();
+
     // double buffer
     glColor3f(1, 0, 0);
+    glutPostRedisplay();
     glutSwapBuffers();
 }
 

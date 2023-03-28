@@ -8,6 +8,8 @@
 
 #define PI 3.14159265358979323846f
 
+float YC, ZC;
+
 // camera offset
 // it is controlled by w,a,s,d
 int xoffset = 0;
@@ -108,11 +110,11 @@ void gsrc_keyInput(unsigned char key, int, int)
   // arrow keys
   // up w
   case 119:
-    gsrc_move(0, 1);
+    gsrc_move(0, -1);
     break;
   // down s
   case 115:
-    gsrc_move(0, -1);
+    gsrc_move(0, 1);
     break;
   // left a
   case 97:
@@ -169,12 +171,25 @@ void setAndRotate()
   // glColor3f(0.0, 0.0, 0.0);
 
   // float m[16];
+  double t;
+  double operation_time = 10000.0;
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+
+  t = glutGet(GLUT_ELAPSED_TIME);
+  // read t
+  fprintf(stderr, "t: %f \r", t);
+
+
+  YC = 10.0 + 20.0 * sin(PI * t / (2.0 * operation_time));
+  ZC = 10.0 + 10.0 * sin(PI * t / (2.0 * operation_time));
+
   // gluLookAt(-10, 10, 50, -10, 10, 0, 0, 1, 0);
   // gluLookAt(-10 + xoffset, 10 + yoffset, 50, -10 + xoffset, 10 + yoffset, 0, 0, 1, 0);
-  gluLookAt(xoffset, 50 / zoom, yoffset, xoffset, 0, yoffset, 1, 0, 0);
+  // gluLookAt(xoffset, 50 / zoom, yoffset, xoffset, 0, yoffset, 1, 0, 0);
+
+  gluLookAt(10 + xoffset, YC / zoom , ZC + yoffset , xoffset, 0, yoffset, 0, 0, 1);
 
   glMultMatrixf(gsrc_getmo()); // get the rotation matrix from the rotation user-interface
 }
