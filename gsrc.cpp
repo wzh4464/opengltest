@@ -158,7 +158,8 @@ void gsrc_keyInput(unsigned char key, int, int)
   }
   // show zoom to window title
   char title[100];
-  sprintf(title, "zoom: %f", zoom);
+  // sprintf(title, "zoom: %f", zoom);
+  snprintf(title, sizeof(title), "zoom: %f", zoom);
   glutSetWindowTitle(title);
 }
 
