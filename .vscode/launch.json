@@ -8,8 +8,7 @@
       "args": [
         ""
       ],
-      "cwd": "/Users/zihanwu/codes/opengl_test",
-      "program": "/Users/zihanwu/codes/opengl_test/build/opengl_test",
+      "program": "${workspaceFolder}/build/opengl_test",
       "internalConsoleOptions": "openOnSessionStart",
     }
   ]
