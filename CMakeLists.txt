@@ -1,9 +1,12 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.5)
 project(opengl_test VERSION 0.1.0)
 # define GL_SILENCE_DEPRECATION
 add_definitions(-DGL_SILENCE_DEPRECATION)
 include_directories(/usr/local/include)
 include_directories(/opt/homebrew/include)
+
+# -stdlib=libc++
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -stdlib=libc++")
 
 # compile commands
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
