@@ -180,8 +180,7 @@ void setAndRotate()
 
   t = glutGet(GLUT_ELAPSED_TIME);
   // read t
-  fprintf(stderr, "t: %f \r", t);
-
+  // fprintf(stderr, "t: %f \r", t);
 
   YC = 10.0 + 20.0 * sin(PI * t / (2.0 * operation_time));
   ZC = 10.0 + 10.0 * sin(PI * t / (2.0 * operation_time));
@@ -190,7 +189,7 @@ void setAndRotate()
   // gluLookAt(-10 + xoffset, 10 + yoffset, 50, -10 + xoffset, 10 + yoffset, 0, 0, 1, 0);
   // gluLookAt(xoffset, 50 / zoom, yoffset, xoffset, 0, yoffset, 1, 0, 0);
 
-  gluLookAt(10 + xoffset, YC / zoom , ZC + yoffset , xoffset, 0, yoffset, 0, 0, 1);
+  gluLookAt(0, 50, 0, 0, 0, 0, 1, 0, 0);
 
   glMultMatrixf(gsrc_getmo()); // get the rotation matrix from the rotation user-interface
 }
