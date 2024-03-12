@@ -39,16 +39,47 @@ void Part_2()
     glPopMatrix();
 }
 
-// Drawing routine.
-
-void object(void)
-//
+void draw_part2(void)
 {
     glPushMatrix();
-    // glTranslatef(3, 0, -10);
+    glTranslatef(3, 0, -10);
     glRotatef(60, 0, 1, 0);
     glRotatef(15, 1, 0, 0);
     Part_2();
+    glPopMatrix();
+}
+
+void object_1(void)
+// explicitly draw the object
+{
+    Part_1();
+    glPushMatrix();
+    glTranslatef(3, 0, -10);
+    glRotatef(60, 0, 1, 0);
+    glRotatef(15, 1, 0, 0);
+    Part_2();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-3, 0, -10);
+    glRotatef(120, 0, 1, 0);
+    glScalef(1, 1, -1);
+    glRotatef(15, 1, 0, 0);
+    Part_2();
+    glPopMatrix();
+}
+
+void object_2(void)
+// use reflection to draw the object
+{
+    Part_1();
+    glPushMatrix();
+    draw_part2();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(-1, 1, 1);
+    draw_part2();
     glPopMatrix();
 }
 
@@ -63,21 +94,12 @@ void drawScene(void)
 
     glPushMatrix();
 
-    Part_1();
-    glPushMatrix();
-    glTranslatef(3, 0, -10);
-    glRotatef(60, 0, 1, 0);
-    Part_2();
-    glPopMatrix();
-
-    glTranslatef(-3, 0, -10);
-    glRotatef(120, 0, 1, 0);
-    Part_2();
+    // object_1();
+    object_2();
 
     glPopMatrix();
 
     // double buffer
-    glColor3f(1, 0, 0);
     glutPostRedisplay();
     glutSwapBuffers();
 }
